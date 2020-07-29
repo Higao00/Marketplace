@@ -53,7 +53,59 @@ Route::get('/model', function () {
     // ]);
     // dd($user);
 
-    
+    // Como pegar a loja de um Usuario
+    // $user = \App\User::find(4);
+    // dd($user->store());
 
-    return \App\User::all();
+    // Como pegar produtos de uma loja
+    // $loja = \App\Store::find(1);
+    // return $loja->products;
+
+    //  Criar uma loja para um Usuario.
+    // $user = \App\User::find(10);
+    // $store = $user->store()->create([
+    //     'name' => 'Loja Teste',
+    //     'description' => 'Loja do Higao',
+    //     'mobile_phone' => 'xx-xxxx-xxx-x-',
+    //     'phone' => 'xxx-xxx-xxx',
+    //     'slug' => 'loja-teste'
+    // ]);
+    // dd($store);
+
+
+    // Criar um produto para uma loja.
+    // $store = \App\Store::find(41);
+    // $product = $store->products()->create([
+    //     'name' => 'Notebook Dell',
+    //     'description' => 'Core i5 10GB 5T',
+    //     'body' => 'Qalquer Coisa',
+    //     'price' => 2999, 99,
+    //     'slug' => 'notebook-dell',
+    // ]);
+    // dd($product);
+
+
+    // Criar uma categoria 
+    // $category = \App\Category::create([
+    //     'name' => 'Games',
+    //     'description' => 'Todos os Games',
+    //     'slug' => 'games'
+    // ]);
+
+    // $category = \App\Category::create([
+    //     'name' => 'Notebooks',
+    //     'description' => 'Todos os Notebook',
+    //     'slug' => 'notebooks'
+    // ]);
+
+    // return $category->all();
+
+
+    // Adicionar um produto para uma categoria ou vice-versa.
+
+    // $product = \App\Product::find(49);
+    // $product->categories()->sync([1, 2]);
+    // dd($product);
+
+    // return \App\User::all();
 });

@@ -20,8 +20,12 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make('password'),
         // ]);
 
-        factory(App\User::class, 50)->create()->each(function ($user) {
-            $user->posts()->save(factory(App\Post::class)->make());
+        // factory(App\User::class, 50)->create()->each(function ($user) {
+        //     $user->posts()->save(factory(App\Post::class)->make());
+        // });
+
+        factory(App\User::class, 40)->create()->each(function ($user) {
+            $user->store()->save(factory(\App\Store::class)->make());
         });
     }
 }
