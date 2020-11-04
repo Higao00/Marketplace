@@ -1,5 +1,12 @@
 <?php
 
+use App\Category;
+use App\Category_product;
+use App\Product;
+use App\Store;
+use App\User;
+use Carbon\Factory;
+use Faker\Factory as FakerFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -20,12 +27,13 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make('password'),
         // ]);
 
-        // factory(App\User::class, 50)->create()->each(function ($user) {
-        //     $user->posts()->save(factory(App\Post::class)->make());
-        // });
-
-        factory(App\User::class, 40)->create()->each(function ($user) {
-            $user->store()->save(factory(\App\Store::class)->make());
+        factory(User::class, 50)->create()->each(function ($user) {
+            factory(Store::class, 50)->create()->each(function ($store) {
+                factory(Category::class, 50)->create()->each(function ($category) {
+                    factory(Product::class, 50)->create()->each(function ($product) {
+                    });
+                });
+            });
         });
     }
 }

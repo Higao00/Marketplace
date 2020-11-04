@@ -20,33 +20,14 @@ Route::get('/', function () {
 
 // Auth::routes();
 
-
 Route::prefix('admin')->namespace('Admin')->group(function () {
-    Route::prefix('stores')->name('admin.stores.')->group(function () {
-        Route::get('/', 'StoreController@index')->name('index');
-        Route::get('/create', 'StoreController@create')->name('create');
-        Route::post('/store', 'StoreController@store')->name('store');
-        Route::get('/{store}/edit', 'StoreController@edit')->name('edit');
-        Route::post('/update/{store}', 'StoreController@update')->name('update');
-        Route::get('/destroy/{store}', 'StoreController@destroy')->name('destroy');
+    Route::name('admin.')->group(function () {
+        Route::resource('products', 'ProductController');
+        Route::resource('stores', 'StoreController');
     });
-    
-
-    Route::prefix('products')->name('admin.products.')->group(function () {
-        Route::get('/', 'ProductController@index')->name('index');
-        Route::get('/create', 'ProductController@create')->name('create');
-        Route::post('/store', 'ProductController@store')->name('store');
-        Route::get('/{product}/edit', 'ProductController@edit')->name('edit');
-        Route::post('/update/{product}', 'ProductController@update')->name('update');
-        Route::get('/destroy/{product}', 'ProductController@destroy')->name('destroy');
-    });
-
-
 });
 
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 
 Route::get('/model', function () {
     // $products = \App\Product::all();

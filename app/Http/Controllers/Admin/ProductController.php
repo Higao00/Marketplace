@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\Store;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -32,7 +33,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $stores = \App\Store::all(['id', 'name']);
+        $stores = Store::all(['id', 'name']);
         return view('admin.products.create', compact('stores'));
     }
 
@@ -44,7 +45,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $store = Store::find($data['store']);
+        $store->products()->create($data);
+
+        flash('Produto Criado Com Sucesso')->success();
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -66,7 +72,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = $this->product->find($id);;
+        $product = $this->product->findOrFail($id);
         return view('admin.products.edit', compact('product'));
     }
 
@@ -79,7 +85,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $product = $this->product->find($id);
+
+        $product->update($data);
+
+        flash('Produto Atualizado Com Sucesso')->success();
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -90,6 +102,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = $this->product->find($id);
+
+        $product->delete();
+
+        flash('Produto Removido Com Sucesso')->success();
+        return redirect()->route('admin.products.index');
     }
 }

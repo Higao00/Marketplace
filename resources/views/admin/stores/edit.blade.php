@@ -2,7 +2,8 @@
 
 @section('content')
     <form action="{{ route('admin.stores.update', ['store' => $store->id]) }}" method="POST">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        @csrf
+        @method('put')
 
         <h1> EDITAR LOJA</h1>
         <div class="form-group">
