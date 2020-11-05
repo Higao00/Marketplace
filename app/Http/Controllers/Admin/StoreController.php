@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreRequest;
 
 class StoreController extends Controller
 {
@@ -20,17 +21,19 @@ class StoreController extends Controller
         return view('admin.stores.create', compact('users'));
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        // dd($request->all());
         $data = $request->all();
-        $user = \App\User::find($data['users']); //Pega e passa o id do usuario.
+        $user = auth()->user();
         $store = $user->store()->create($data); //cria a loja no banco.
 
         flash('Loja Criada Com Sucesso')->success();
         return redirect()->route('admin.stores.index');
     }
 
+    public function show($id)
+    {
+    }
 
     public function edit($store)
     {
@@ -39,7 +42,7 @@ class StoreController extends Controller
         return view('admin.stores.edit', compact('store'));
     }
 
-    public function update(Request $request, $store)
+    public function update(StoreRequest $request, $store)
     {
         $data = $request->all();
         $store = \App\Store::find($store);
@@ -53,7 +56,7 @@ class StoreController extends Controller
     {
         $store = \App\Store::find($store);
         $store->delete();
-        
+
         flash('Loja Removida Com Sucesso')->success();
         return redirect()->route('admin.stores.index');
     }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,103 +17,105 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $helloWord = 'Hello Word';
     return view('welcome', compact('helloWord'));
-});
+})->name('home');
 
-// Auth::routes();
+Auth::routes();
 
-Route::prefix('admin')->namespace('Admin')->group(function () {
-    Route::name('admin.')->group(function () {
-        Route::resource('products', 'ProductController');
-        Route::resource('stores', 'StoreController');
+Route::group(['middleware' => 'auth'], function () {
+    Route::prefix('admin')->namespace('Admin')->group(function () {
+        Route::name('admin.')->group(function () {
+            Route::resource('products', 'ProductController');
+            Route::resource('stores', 'StoreController');
+        });
     });
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/model', function () {
-    // $products = \App\Product::all();
+// Route::get('/model', function () {
+//     // $products = \App\Product::all();
 
-    // $user = new \App\User();
-    // $user = \App\User::find(1);
-    // $user->name = 'Atualizado Usuario Teste';
-    // $user->email = 'email@teste.com';
-    // $user->password = bcrypt('12345');
-    // $user->save();
+//     // $user = new \App\User();
+//     // $user = \App\User::find(1);
+//     // $user->name = 'Atualizado Usuario Teste';
+//     // $user->email = 'email@teste.com';
+//     // $user->password = bcrypt('12345');
+//     // $user->save();
 
-    // return \App\User::where('name', 'Marty Cruickshank')->first(); // Retorna o que for encontrado no Where como condição.
-    // return \App\User::all(); // Retorna todos os Usuarios do Banco.
-    // return \App\User::find(1); // Retorna um Usuario com id Especifico.
-    // return \App\User::paginate(10); // Retorna os Usuarios com paginação.
+//     // return \App\User::where('name', 'Marty Cruickshank')->first(); // Retorna o que for encontrado no Where como condição.
+//     // return \App\User::all(); // Retorna todos os Usuarios do Banco.
+//     // return \App\User::find(1); // Retorna um Usuario com id Especifico.
+//     // return \App\User::paginate(10); // Retorna os Usuarios com paginação.
 
-    // Mass Assignment - Atrivuição em Massa
-    // $user = \App\User::create([
-    //     'name' => 'Higor Henrique',
-    //     'email' => 'ff@gg.com',
-    //     'password' => bcrypt('123456778')
-    // ]);
+//     // Mass Assignment - Atrivuição em Massa
+//     // $user = \App\User::create([
+//     //     'name' => 'Higor Henrique',
+//     //     'email' => 'ff@gg.com',
+//     //     'password' => bcrypt('123456778')
+//     // ]);
 
-    // dd($user);
+//     // dd($user);
 
-    // $user = \App\User::find(52);
-    // $user->update([
-    //     'name' => 'Atualiza com mass update'
-    // ]);
-    // dd($user);
+//     // $user = \App\User::find(52);
+//     // $user->update([
+//     //     'name' => 'Atualiza com mass update'
+//     // ]);
+//     // dd($user);
 
-    // Como pegar a loja de um Usuario
-    // $user = \App\User::find(4);
-    // dd($user->store());
+//     // Como pegar a loja de um Usuario
+//     // $user = \App\User::find(4);
+//     // dd($user->store());
 
-    // Como pegar produtos de uma loja
-    // $loja = \App\Store::find(1);
-    // return $loja->products;
+//     // Como pegar produtos de uma loja
+//     // $loja = \App\Store::find(1);
+//     // return $loja->products;
 
-    //  Criar uma loja para um Usuario.
-    // $user = \App\User::find(10);
-    // $store = $user->store()->create([
-    //     'name' => 'Loja Teste',
-    //     'description' => 'Loja do Higao',
-    //     'mobile_phone' => 'xx-xxxx-xxx-x-',
-    //     'phone' => 'xxx-xxx-xxx',
-    //     'slug' => 'loja-teste'
-    // ]);
-    // dd($store);
-
-
-    // Criar um produto para uma loja.
-    // $store = \App\Store::find(41);
-    // $product = $store->products()->create([
-    //     'name' => 'Notebook Dell',
-    //     'description' => 'Core i5 10GB 5T',
-    //     'body' => 'Qalquer Coisa',
-    //     'price' => 2999, 99,
-    //     'slug' => 'notebook-dell',
-    // ]);
-    // dd($product);
+//     //  Criar uma loja para um Usuario.
+//     // $user = \App\User::find(10);
+//     // $store = $user->store()->create([
+//     //     'name' => 'Loja Teste',
+//     //     'description' => 'Loja do Higao',
+//     //     'mobile_phone' => 'xx-xxxx-xxx-x-',
+//     //     'phone' => 'xxx-xxx-xxx',
+//     //     'slug' => 'loja-teste'
+//     // ]);
+//     // dd($store);
 
 
-    // Criar uma categoria 
-    // $category = \App\Category::create([
-    //     'name' => 'Games',
-    //     'description' => 'Todos os Games',
-    //     'slug' => 'games'
-    // ]);
-
-    // $category = \App\Category::create([
-    //     'name' => 'Notebooks',
-    //     'description' => 'Todos os Notebook',
-    //     'slug' => 'notebooks'
-    // ]);
-
-    // return $category->all();
+//     // Criar um produto para uma loja.
+//     // $store = \App\Store::find(41);
+//     // $product = $store->products()->create([
+//     //     'name' => 'Notebook Dell',
+//     //     'description' => 'Core i5 10GB 5T',
+//     //     'body' => 'Qalquer Coisa',
+//     //     'price' => 2999, 99,
+//     //     'slug' => 'notebook-dell',
+//     // ]);
+//     // dd($product);
 
 
-    // Adicionar um produto para uma categoria ou vice-versa.
+//     // Criar uma categoria 
+//     // $category = \App\Category::create([
+//     //     'name' => 'Games',
+//     //     'description' => 'Todos os Games',
+//     //     'slug' => 'games'
+//     // ]);
 
-    // $product = \App\Product::find(49);
-    // $product->categories()->sync([1, 2]);
-    // dd($product);
+//     // $category = \App\Category::create([
+//     //     'name' => 'Notebooks',
+//     //     'description' => 'Todos os Notebook',
+//     //     'slug' => 'notebooks'
+//     // ]);
+
+//     // return $category->all();
 
 
-    // return \App\User::all();
-});
+//     // Adicionar um produto para uma categoria ou vice-versa.
+
+//     // $product = \App\Product::find(49);
+//     // $product->categories()->sync([1, 2]);
+//     // dd($product);
+
+
+//     // return \App\User::all();
+// });

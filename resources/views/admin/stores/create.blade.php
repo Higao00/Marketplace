@@ -30,15 +30,6 @@
         </div>
 
         <div class="form-group">
-            <label> Usuario </label>
-            <select class="form-control" value="" name="users">
-                @foreach ($users as $user)
-                    <option value="{{ $user->id }}"> {{ $user->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
             <button class="btn btn-lg btn-success" type="submit"> CRIAR LOJA </button>
         </div>
     </form>
