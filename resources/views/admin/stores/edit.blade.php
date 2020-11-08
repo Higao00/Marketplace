@@ -8,22 +8,46 @@
         <h1> EDITAR LOJA</h1>
         <div class="form-group">
             <label> Nome Loja </label>
-            <input class="form-control" type="text" name="name" value="{{ $store->name }}">
+            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
+                value="{{ $store->name }}">
+            @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Descrição </label>
-            <input class="form-control" type="text" name="description" value="{{ $store->description }}">
+            <input class="form-control @error('description') is-invalid @enderror" type="text" name="description"
+                value="{{ $store->description }}">
+            @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Telefone </label>
-            <input class="form-control" type="text" name="phone" value="{{ $store->phone }}">
+            <input class="form-control @error('phone') is-invalid @enderror" type="text" name="phone"
+                value="{{ $store->phone }}">
+            @error('phone')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Celular </label>
-            <input class="form-control" type="text" name="mobile_phone" value="{{ $store->mobile_phone }}">
+            <input class="form-control @error('mobile_phone') is-invalid @enderror" type="text" name="mobile_phone"
+                value="{{ $store->mobile_phone }}">
+            @error('mobile_phone')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">

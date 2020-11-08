@@ -1,28 +1,53 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1> EDITAR PRODUTO</h1>
     <form action="{{ route('admin.products.update', ['product' => $product->id]) }}" method="POST">
         @csrf
         @method('put')
+
+        <h1> EDITAR PRODUTO</h1>
         <div class="form-group">
             <label> Nome Produto </label>
-            <input class="form-control" type="text" name="name" value="{{ $product->name }}">
+            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
+                value="{{ $product->name }}">
+            @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Descrição </label>
-            <input class="form-control" type="text" name="description" value="{{ $product->description }}">
+            <input class="form-control @error('description') is-invalid @enderror" type="text" name="description"
+                value="{{ $product->description }}">
+            @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Conteudo </label>
-            <textarea name="boyd" id="" cols="30" rows="10" class="form-control">{{ $product->body }}</textarea>
+            <textarea name="body" id="" cols="30" rows="10"
+                class="form-control @error('body') is-invalid @enderror">{{ $product->body }}</textarea>
+            @error('body')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Preço </label>
-            <input class="form-control" type="text" name="price" value="{{ $product->price }}">
+            <input class="form-control @error('price') is-invalid @enderror" type="text" name="price"
+                value="{{ $product->price }}">
+            @error('price')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">

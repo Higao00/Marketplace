@@ -7,36 +7,55 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <label> Nome Produto </label>
-            <input class="form-control" type="text" name="name">
+            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
+                value="{{ old('name') }}">
+
+            @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Descrição </label>
-            <input class="form-control" type="text" name="description">
+            <input class="form-control @error('description') is-invalid @enderror" type="text" name="description"
+                value="{{ old('description') }}">
+
+            @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Conteudo </label>
-            <textarea name="body" id="" cols="30" rows="10" class="form-control"></textarea>
+            <textarea name="body" id="" cols="30" rows="10"
+                class="form-control @error('body') is-invalid @enderror">{{ old('body') }}</textarea>
+
+            @error('body')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Preço </label>
-            <input class="form-control" type="text" name="price">
+            <input class="form-control @error('price') is-invalid @enderror" type="text" name="price"
+                value="{{ old('price') }}">
+
+            @error('price')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label> Slug </label>
             <input class="form-control" type="text" name="slug">
-        </div>
-
-        <div class="form-group">
-            <label> Lojas </label>
-            <select class="form-control" name="store">
-                @foreach ($stores as $store)
-                    <option value="{{ $store->id }}"> {{ $store->name }}</option>
-                @endforeach
-            </select>
         </div>
 
         <div class="form-group">
