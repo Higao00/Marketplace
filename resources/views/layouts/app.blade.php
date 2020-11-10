@@ -29,6 +29,10 @@
                         <a class="nav-link" href="{{ route('admin.products.index') }}">Produtos</a>
                     </li>
 
+                    <li class="nav-item @if(request()->is('admin/categories*')) active @endif">
+                        <a class="nav-link" href="{{ route('admin.categories.index') }}">Categorias</a>
+                    </li>
+
                 </ul>
                 <div class="my-2 my-lg-0">
                     <ul class="navbar-nav mr-auto">

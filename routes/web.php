@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::name('admin.')->group(function () {
             Route::resource('products', 'ProductController');
             Route::resource('stores', 'StoreController');
+            Route::resource('categories', 'CategoryController');
         });
     });
 });
