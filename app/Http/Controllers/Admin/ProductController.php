@@ -8,10 +8,13 @@ use App\Product;
 use App\Store;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use App\Traits\UploadTraits;
+
 
 class ProductController extends Controller
 {
     private $product;
+    use UploadTraits;
     public function __construct(Product $product)
     {
         $this->product = $product;
@@ -24,7 +27,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->product->paginate(10);
+        $userStore = auth()->user()->store;
+        $products = $userStore->products()->paginate(10);
         return view('admin.products.index', compact('products'));
     }
 
@@ -53,6 +57,11 @@ class ProductController extends Controller
         $product = $store->products()->create($data);
 
         $product->categories()->sync($data['categories']);
+
+        if ($request->hasFile('photos')) {
+            $images = $this->imageUpload($request->file('photos'), 'image');
+            $product->photos()->createMany($images);
+        }
 
         flash('Produto Criado Com Sucesso')->success();
         return redirect()->route('admin.products.index');
@@ -97,6 +106,11 @@ class ProductController extends Controller
         $product = $this->product->find($id);
         $product->update($data);
         $product->categories()->sync($data['categories']);
+
+        if ($request->hasFile('photos')) {
+            $images = $this->imageUpload($request->file('photos'), 'image');
+            $product->photos()->createMany($images);
+        }
 
         flash('Produto Atualizado Com Sucesso')->success();
         return redirect()->route('admin.products.index');
