@@ -60,11 +60,6 @@
         </div>
 
         <div class="form-group">
-            <label> Slug </label>
-            <input class="form-control" type="text" name="slug">
-        </div>
-
-        <div class="form-group">
             <button class="btn btn-lg btn-success" type="submit"> CRIAR LOJA </button>
         </div>
     </form>
