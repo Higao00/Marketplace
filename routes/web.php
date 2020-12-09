@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $helloWord = 'Hello Word';
-    return view('welcome', compact('helloWord'));
-})->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
