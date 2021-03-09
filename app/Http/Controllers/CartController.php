@@ -19,8 +19,17 @@ class CartController extends Controller
         $product = $request->get('product');
 
         if (session()->has('cart')) {
-            // Existindo eu adiciono o produto na sessão existente.
-            session()->push('cart', $product);
+            $products = session()->get('cart');
+            $productsSlugs = array_column($products, 'slug');
+
+            if (in_array($product['slug'], $productsSlugs)) {
+                $products = $this->productIncrement($product['slug'], $product['amount'], $products);
+
+                session()->put('cart', $products);
+            } else {
+                // Existindo eu adiciono o produto na sessão existente.
+                session()->push('cart', $product);
+            }
         } else {
             // Não existindo eu crio a sessao como primeiro produto.
             $products[] = $product;
@@ -29,5 +38,42 @@ class CartController extends Controller
 
         flash('Produto adicionado no carrinho')->success();
         return redirect()->route('product.single', ['slug' => $product['slug']]);
+    }
+
+    public function remove($slug)
+    {
+        if (!session('cart')) {
+            return redirect()->route('cart.index');
+        }
+
+        $products = session()->get('cart');
+
+        $products = array_filter($products, function ($line) use ($slug) {
+            return $line['slug'] != $slug;
+        });
+
+        session()->put('cart', $products);
+        return redirect()->route('cart.index');
+    }
+
+    public function cancel()
+    {
+        session()->forget('cart');
+
+        flash('Desistencia da compra')->success();
+        return redirect()->route('cart.index');
+    }
+
+    private function productIncrement($slug, $amount, $products)
+    {
+        $products = array_map(function ($line) use ($slug, $amount) {
+            if ($slug == $line['slug']) {
+                $line['amount'] += $amount;
+            }
+
+            return $line;
+        }, $products);
+
+        return $products;
     }
 }
